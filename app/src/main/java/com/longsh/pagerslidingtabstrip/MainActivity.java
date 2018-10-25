@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
         setTabsValue();
         //设置小红点,item从0开始计算
 //        tabs.setMsgToast(1, true);
-        tabs.setMsgToast(0, true);
-        tabs.setMsgToast(3, true);
+        tabs.setMsgToast(0, false);
+        tabs.setMsgNumber(2,66);
+        tabs.setMsgNumber(3, 0);
         tabs.setMsgToast(4, true);
         tabs.setMsgToast(6, true);
 

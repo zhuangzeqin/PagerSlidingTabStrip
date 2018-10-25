@@ -25,7 +25,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -161,7 +160,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
         defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         scrollTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT,1);
+        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
 
         if (locale == null) {
             locale = getResources().getConfiguration().locale;
@@ -243,9 +242,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         });
 
 //        layoutView.setPadding(tabPadding, 0, tabPadding, 0);
-        if (tabsScroll){
+        if (tabsScroll) {
             tabsContainer.addView(layoutView, position, shouldExpand ? scrollTabLayoutParams : defaultTabLayoutParams);
-        }else {
+        } else {
             tabsContainer.addView(layoutView, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
         }
     }
@@ -259,11 +258,25 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     public void setMsgToast(int msgPosition, boolean isMsg) {
         View v = tabsContainer.getChildAt(msgPosition);
         if (v != null) {
+            v.findViewById(R.id.rtv_msg_tip).setVisibility(GONE);
             if (isMsg) {
                 v.findViewById(R.id.iv_msg).setVisibility(VISIBLE);
             } else {
                 v.findViewById(R.id.iv_msg).setVisibility(GONE);
             }
+        }
+    }
+    /**
+     * add by zhuagnzeqin 2018-10-25 10:40:43 新增一个可以设置消息数量红点
+     * @param msgPosition 选择卡的位置； 从0开始
+     * @param num 消息数量
+     */
+    public void setMsgNumber(int msgPosition, int num) {
+        View v = tabsContainer.getChildAt(msgPosition);
+        if (v != null) {
+            v.findViewById(R.id.iv_msg).setVisibility(GONE);
+            MsgView msgView = (MsgView) v.findViewById(R.id.rtv_msg_tip);
+            UnreadMsgUtils.show(msgView, num);
         }
     }
 
@@ -361,7 +374,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         if (currentTab instanceof TextView) {
             TextView tab = (TextView) currentTab.findViewById(R.id.tv_content);
             tvWidth = tab.getPaint().measureText(tab.getText().toString() + "");
-            Log.d("viewlog",tab.getText().toString());
+            Log.d("viewlog", tab.getText().toString());
         }
         Log.d("viewlog", "lineLeft=" + lineLeft + ",lineRight=" + lineRight);
 
